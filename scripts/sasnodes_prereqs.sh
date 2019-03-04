@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-# Run this script as root or sudo
+# Run this script as install user (e.g. ec2-user on aws)
 # Set the following environment variables:
 #   NFS_SERVER (the ip or dns of the bastion host )
 #   HOST (the label/alias for the machine - services|controller)
