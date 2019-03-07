@@ -7,25 +7,9 @@ The "ansible controller" serves as jump host into the environment, and may be th
 The intent of these templates is to simplify the creation of software install templates for any cloud platform, 
 any topology and for any product combination.
 
-This project is meant to be included as a "git submodule" into your git project, in a directory names "common":
+This project is meant to be included into the sas install directory on your ansible controller (e.g. `git clone https://github.com/sassoftware/quickstart-sas-viya-common.git /sas/install/common`)
 
-```
- myproject
-   - common (-> quickstart-sas-viya-common)
-     - ansible
-       - playbooks
-       - roles
-     - scripts
-   - ansible      
-     - playbooks
-     - roles
-   - scripts
-   - templates
-   ...
-```
-
-If you want to modify/overwrite any of of the scripts,  roles, or playbooks in "common", 
-copy them to the corresponding "scripts" or "playbooks" directory in your project. 
+Some parts of this project may be modified to fit your exact needs. Those parts (scripts,  roles, or playbooks) you would copy into the corresponding `scripts` or `playbooks` directory in your project then modify.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -53,22 +37,21 @@ copy them to the corresponding "scripts" or "playbooks" directory in your projec
 
 
 - create the infrastructure (networks, VMs, firewalls) using the cloud provider's templating language (e.g. AWS Cloudformation on AWS, Azure Resource Manager, terraform ... )
-- include this project as git submodule into your git project
-- copy the contents of `common/ansible/playbooks` into `ansible/playbooks` 
-- modify the static topology definition to match your topology
-- implement any parts of the scripts and playbooks that have cloud-specific elements and/or need to be added or modified
-- run the provided prereq shell scripts on the the VMs
-- run the deployment playbooks on the ansible controller
+- copy the contents of this project's `ansible/playbooks` into your project's `ansible/playbooks` 
+- copy and modify the static topology definition files(`ansible/playbooks/inventory.ini|group_vars`) to match your topology
+- copy and modify any other parts of the scripts and playbooks that have cloud-specific elements and/or need to be adjusted for your environment
+- add any scripts or playbooks that are unique to your environment
+
 
 ## How the playbooks and roles and scripts work
 
 Most of the steps for the deployment are being implemented in ansible. You find all that code in the `playbooks` and `roles` directories.
 
-The bootstrapping code at the very beginning (which, among other things, installs ansible) uses `bash`. You find that code in the `scripts` directory.    
+Before we can start using ansible, we need to run some preparatory statements on the VMs. Execute the bootstrapping code `scripts/ansiblecontroller_prereqs.sh` during initialization of the ansible controller and `scripts/sasnodes_prereqs.sh` during initialization of all SAS VMs.
 
 When you create your infrastructure, all the cloud providers' templating languages provide some way to execute bootstrapping code on the VMs 
 (usually some form of [cloud-init](https://cloud-init.io/), often implemented as `UserData` VM attribute).
-That is where you kick off the download of the scripts and ansible playbooks to your VMs and then execute those scripts and playbooks.
+That is where you run the prereq scripts, and, on the ansible controller, kick off the download of all other scripts and ansible playbooks and execute those scripts and playbooks.
 
 First, you execute the bootstrapping scripts on each VM, which set up the necessary pieces so that the VMs can communicate with each other.
 After that, everything will be driven by a number of playbooks executed from the ansible controller.
@@ -90,7 +73,7 @@ The overwritten role will automatically be picked up (controlled by an ansible s
 To add a role, write its implemention and put it into the `ansible/roles` directory in your project. Then edit one of the playbooks in your `ansible/playbooks` directory and add that role.
 Or add a playbook and make sure to invoke it from your ansible controller `cloud-init` script. 
 
-During the preparation steps, the project files will be copied to the following file structure on the ansible controller (by the [scripts/download_file_tree.sh](scripts/download_file_tree.sh) script ) 
+After running the prereq scripts, copy the contents of your project and the contents of this "common" project into the following file structure on the ansible controller 
 
 ```
 /sas/install
@@ -106,6 +89,7 @@ During the preparation steps, the project files will be copied to the following 
 ...
 ```
 
+(use the [scripts/download_file_tree.sh](scripts/download_file_tree.sh) as an example ) 
 
 The playbooks are run as the [installation user](#installation-users) from `/sas/install/ansible/playbooks`. 
 
@@ -131,7 +115,7 @@ It needs to be the same user on all VMs.
 
  AWS      | Azure  | Google 
 :-------- |:-------|:-------
- `ec2-user` | `vmuser` |        
+ `ec2-user` | `vmuser` | `sasinstall`       
 
 
 
@@ -221,7 +205,7 @@ only to fail 20 minutes in because the specified Mirror location does not actual
 - verify hosted zone
 - verify mirror
 - verify elb has been created
-- verify bucket no tpublic
+- verify bucket not public
 
     
 ### Additional preparatory steps - driven by ansible from the ansible controller  
