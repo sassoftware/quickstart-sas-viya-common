@@ -387,16 +387,32 @@ The playbook `ansible/playbooks/prepare_deployment.yml` does additional steps ne
 
 
 Logs are routed to `/var/log/sas/install/prepare_deployment.yml`
- 
+
+```
+    Inputs: 
+       - DEPLOYMENT_MIRROR: location of pre-existing deployment mirror
+       - DEPLOYMENT_DATA_LOCATION: location of SOE file
+       - ADMINPASS: base64 encoded password for adminuser
+       - VIYA_VERSION: 3.3 or 3.4
+```
+
 Example invocation:
 
 ``` 
-  export ANSIBLE_LOG_PATH=/var/log/sas/install/prepare_deployment.log
-  export ANSIBLE_CONFIG=/sas/install/ansible/playbooks/ansible.cfg
-  ansible-playbook -v /sas/install/ansible/playbooks/prepare_deployment.yml \
-                      -e "DEPLOYMENT_MIRROR=${DeploymentMirror}" \
-                      -e "DEPLOYMENT_DATA_LOCATION=${DeploymentDataLocation}" \
-                      -e "ADMINPASS=${SASAdminPass}"
+   command: !Sub
+      - |
+      su -l ec2-user -c '
+         export ANSIBLE_LOG_PATH=/var/log/sas/install/prepare_deployment.log
+         export ANSIBLE_CONFIG=/sas/install/common/ansible/playbooks/ansible.cfg
+         ansible-playbook -v /sas/install/common/ansible/playbooks/prepare_deployment.yml \
+            -e "DEPLOYMENT_MIRROR=${DeploymentMirror}" \
+            -e "DEPLOYMENT_DATA_LOCATION=${DeploymentDataLocation}" \
+            -e "ADMINPASS=${ADMINPASS}" \
+            -e "VIYA_VERSION=${VIYA_VERSION}"
+         '
+      - VIYA_VERSION: !GetAtt LicenseInfo.ViyaVersion
+        ADMINPASS: !Base64
+           "Ref": SASAdminPass
 ```
 
  1. __Download sas-orchestration cli__

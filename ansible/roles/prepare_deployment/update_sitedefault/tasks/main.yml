@@ -64,7 +64,7 @@
     marker: '# {mark} set sasboot pw'
     insertafter: 'application:'
     block: |2
-               sas.logon.initial.password: '{{ ADMINPASS }}'
+               sas.logon.initial.password: '{{ ADMINPASS | b64decode }}'
 
 - name: set sitedefault permissions because it now contains a password
   file:
