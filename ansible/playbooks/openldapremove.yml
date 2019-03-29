@@ -2,7 +2,7 @@
 # uninstall playbook
 
 - name: "remove everything on openldapclients"
-  hosts: openldapclients
+  hosts: OpenLdapClients
 
   become: yes
   become_user: root
@@ -55,7 +55,7 @@
 
 
 - name: "remove everything on openldapserver"
-  hosts: openldapserver
+  hosts: OpenLdapServer
 
   become: yes
   become_user: root
