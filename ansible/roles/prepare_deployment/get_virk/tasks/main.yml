@@ -6,10 +6,12 @@
   - git
 
 - name: clone virk
+  vars:
+    VERSION: "{{ VIYA_VERSION }}"
   git:
     repo: "{{ VIRK_URL }}"
     dest: "{{ VIRK_DIR }}"
-    version: "{{VIRK_COMMIT_ID[VIYA_VERSION]}}"
+    version: "{{VIRK_COMMIT_ID[VERSION]}}"
     force: yes
 
 
