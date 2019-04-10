@@ -322,23 +322,6 @@ ansible-playbook -v /sas/install/ansible/playbooks/prepare_nodes.yml \
           prepare_nodes/mount_cascache
     ```
 
- 1. __Download the VIRK predeployment playbook__
-
-    Make the [VIRK pre-install playbook](https://github.com/sassoftware/virk/tree/viya-3.4/playbooks/pre-install-playbook) available
-    
-    ```
-    Host Groups:
-       AnsibleController
-    Inputs: 
-       group_vars: 
-         VIRK_COMMIT_ID: 
-         VIRK_URL:
-         VIRK_DIR:
-       extra_vars: VIYA_VERSION
-    Role: prepare_nodes/get_virk
-    ```
-    
-
 #### IAAS specific setup steps:
 
 AWS:
@@ -554,6 +537,22 @@ Example invocation:
     
     ```
 
+ 1. __Download the VIRK predeployment playbook__
+
+    Make the [VIRK pre-install playbook](https://github.com/sassoftware/virk/tree/viya-3.4/playbooks/pre-install-playbook) available
+    
+    ```
+    Host Groups:
+       AnsibleController
+    Inputs: 
+       group_vars: 
+         VIRK_COMMIT_ID: 
+         VIRK_URL:
+         VIRK_DIR:
+       extra_vars: VIYA_VERSION
+    Role: prepare_nodes/get_virk
+    ```
+    
 
 ### Run VIRK 
     
