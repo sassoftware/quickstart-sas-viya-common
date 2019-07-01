@@ -12,5 +12,5 @@
     state: present
     timeout: 1200
     sleep: 1
-  with_items: "{{ groups['sas-servers'] }}"
+  with_items: "{{ groups['sas_servers'] }}"
 

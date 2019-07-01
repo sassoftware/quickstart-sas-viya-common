@@ -13,7 +13,7 @@
     - shared_backup_dir
 
 - name: mount share backup directory
-  hosts: [sas-servers]
+  hosts: [sas_servers]
   become: yes
   become_user: root
   roles:

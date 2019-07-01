@@ -51,7 +51,7 @@
   replace:
     dest: "{{ VIYA_PLAYBOOK_DIR }}/inventory.ini"
     regexp: '^\[CommandLine\]\ndeployTarget'
-    replace: '[CommandLine]\n{{ groups["sas-servers"]|unique|join("\n") }}'
+    replace: '[CommandLine]\n{{ groups["sas_servers"]|unique|join("\n") }}'
 
 - name: Programming - connect
   replace:
@@ -125,27 +125,27 @@
   replace:
     dest: "{{ VIYA_PLAYBOOK_DIR }}/inventory.ini"
     regexp: '^\[sasdatasvrc\]\ndeployTarget'
-    replace: '[sasdatasvrc]\n{{ groups["sas-services"]|unique|join("\n") }}'
+    replace: '[sasdatasvrc]\n{{ groups["sas_services"]|unique|join("\n") }}'
 
 # multiple
 - name: Multiple - CoreServices
   replace:
     dest: "{{ VIYA_PLAYBOOK_DIR }}/inventory.ini"
     regexp: '^\[CoreServices\]\ndeployTarget'
-    replace: '[CoreServices]\n{{ groups["sas-services"]|unique|join("\n") }}'
+    replace: '[CoreServices]\n{{ groups["sas_services"]|unique|join("\n") }}'
 
 - name: Multiple - Consul
   replace:
     dest: "{{ VIYA_PLAYBOOK_DIR }}/inventory.ini"
     regexp: '^\[Consul\]\ndeployTarget'
-    replace: '[Consul]\n{{ groups["sas-services"]|unique|join("\n") }}'
+    replace: '[Consul]\n{{ groups["sas_services"]|unique|join("\n") }}'
 
 
 - name: Multiple - httpproxy
   replace:
     dest: "{{ VIYA_PLAYBOOK_DIR }}/inventory.ini"
     regexp: '^\[httpproxy\]\ndeployTarget'
-    replace: '[httpproxy]\n{{ groups["sas-services"]|unique|join("\n") }}'
+    replace: '[httpproxy]\n{{ groups["sas_services"]|unique|join("\n") }}'
 
 # CAS
 - name: Set CAS controller target
@@ -153,6 +153,13 @@
     dest: "{{ VIYA_PLAYBOOK_DIR }}/inventory.ini"
     regexp: '^\[sas-casserver-primary\]\ndeployTarget'
     replace: '[sas-casserver-primary]\ncontroller'
+
+# CAS
+- name: Set CAS controller target
+  replace:
+    dest: "{{ VIYA_PLAYBOOK_DIR }}/inventory.ini"
+    regexp: '^\[sas_casserver_primary\]\ndeployTarget'
+    replace: '[sas_casserver_primary]\ncontroller'
 
 
 # Everything else
