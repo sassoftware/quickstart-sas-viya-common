@@ -5,6 +5,11 @@
   with_items:
   - git
 
+- name: Make sure virk doesn't already exist
+  stat:
+    path: "{{ VIRK_DIR }}"
+  register: stat_result
+  
 - name: clone virk
   vars:
     VERSION: "{{ VIYA_VERSION }}"
@@ -13,10 +18,4 @@
     dest: "{{ VIRK_DIR }}"
     version: "{{VIRK_COMMIT_ID[VERSION]}}"
     force: yes
-
-
-
-
-
-
-
+  when: state_result.stat.exists == False
