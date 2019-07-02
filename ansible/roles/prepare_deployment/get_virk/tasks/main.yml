@@ -18,4 +18,4 @@
     dest: "{{ VIRK_DIR }}"
     version: "{{VIRK_COMMIT_ID[VERSION]}}"
     force: yes
-  when: state_result.stat.exists == False
+  when: stat_result.stat.exists == False
