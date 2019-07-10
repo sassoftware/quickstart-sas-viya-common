@@ -10,6 +10,7 @@
     IS_HTTP: False
     IS_BASE64: False
     IS_S3: False
+    IS_GS: False # GOOGLE Bucket location
 
 - name: "check if AWS and thus S3 (because AWS enforces S3 by default presently)."
   set_fact:
@@ -25,6 +26,11 @@
   set_fact:
     IS_BASE64: True
   when: "(DEPLOYMENT_DATA_LOCATION | lower).startswith('data:application/zip;base64,')"
+
+- name: "check if GCP bucket location"
+  set_fact:
+    IS_GS: True
+  when: IS_GOOGLE
 
 ####### Fetch File ###############################
 - name: download SOE file for AWS from s3
@@ -53,3 +59,9 @@
 
     echo "{{ DEPLOYMENT_DATA_LOCATION[28:] }}" | base64 --decode > "{{ TEMPORARY_SOE_FILE }}"
   when: IS_BASE64
+
+- name: download SOE file from Google bucket location
+  shell: |
+
+    gsutil cp {{ DEPLOYMENT_DATA_LOCATION }} {{ TEMPORARY_SOE_FILE }}
+  when: IS_GOOGLE

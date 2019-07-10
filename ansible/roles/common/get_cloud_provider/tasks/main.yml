@@ -27,10 +27,21 @@
   register: azure_check
   become: true
 
-- name: Set AWS if check found AWS
+- name: Set AZURE if check found AZURE
   set_fact:
     IS_AZURE: True
     CLOUD_PROVIDER: AZURE
   when: '"microsoft corporation" in azure_check.stdout'
 
-# TODO: add logic for detecting GCP
+- name: Run check for GOOGLE
+  script:
+    cmd: |
+      /usr/sbin/dmidecode -s system-manufacturer | tr "[:upper:]" "[:lower:]"
+  register: google_check
+  become: true
+
+- name: Set GOOGLE if check found GOOGLE
+  set_fact:
+    IS_GOOGLE: True
+    CLOUD_PROVIDER: GOOGLE
+  when: '"google" in google_check.stdout'
