@@ -25,6 +25,7 @@
 
 - name: install httpd
   yum: name=httpd
+    lock_timeout: 300
 
 - name: set httpd port to 8008
   replace:

@@ -2,6 +2,7 @@
 
 - name: ensure that Git is installed
   yum: name={{ item }} state=latest
+    lock_timeout: 300
   with_items:
   - git
 
