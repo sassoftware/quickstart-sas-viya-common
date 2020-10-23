@@ -83,6 +83,8 @@
 
 - name: Mount cas cache dir
   hosts: [NeedMountCASCacheDrive]
+  module_defaults:
+    lock_timeout: 300
   become_user: root
   become: yes
   gather_facts: true

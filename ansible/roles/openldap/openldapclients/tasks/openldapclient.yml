@@ -4,7 +4,6 @@
   yum: 
     pkg: "{{ item }} "
     state: present
-    lock_timeout: 300
   with_items:
      - openldap-clients
      - openldap

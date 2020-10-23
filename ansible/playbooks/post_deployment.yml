@@ -4,6 +4,8 @@
 
 - name: created share backup directory
   hosts: [SharedVaultServer]
+  module_defaults:
+    lock_timeout: 300
   become: yes
   become_user: root
   roles:
@@ -14,6 +16,8 @@
 
 - name: mount share backup directory
   hosts: [sas_servers]
+  module_defaults:
+    lock_timeout: 300
   become: yes
   become_user: root
   roles:
@@ -24,6 +28,8 @@
 
 - name: install mysql client
   hosts: [NeedDatabaseAccessClients]
+  module_defaults:
+    lock_timeout: 300
   gather_facts: False
   become: yes
   become_user: root

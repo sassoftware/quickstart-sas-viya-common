@@ -16,7 +16,6 @@
   yum: 
     pkg: "{{ item }}"
     state: latest
-    lock_timeout: 300
   with_items:
      - sssd
 

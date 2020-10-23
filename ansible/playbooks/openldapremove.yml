@@ -36,7 +36,9 @@
 
 
     - name: Stop and disable SSSD
-      yum: 
+      module_defaults:
+        lock_timeout: 300
+      yum:
         pkg: "{{ item }}"
         state: latest
       with_items:

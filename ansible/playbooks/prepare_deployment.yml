@@ -64,6 +64,8 @@
 
 - name: Get VIRK pre-install playbook
   hosts: [AnsibleController]
+  module_defaults:
+    lock_timeout: 300
   gather_facts: true
   roles:
     - role: prepare_deployment/get_virk

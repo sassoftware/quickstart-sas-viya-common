@@ -4,7 +4,6 @@
     pkg: "{{ item }}"
     state: present
     update_cache: yes
-    lock_timeout: 300
   with_items:
      - openldap-servers
      - openldap-clients

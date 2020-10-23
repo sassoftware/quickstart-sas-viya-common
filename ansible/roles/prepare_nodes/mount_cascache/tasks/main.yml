@@ -35,7 +35,6 @@
     yum:
       name: mdadm
       state: present
-      lock_timeout: 300
 
   - name: Save code for mounting ephemeral drives
     copy:
