@@ -3,7 +3,8 @@
 - name: Perform common tasks on all machines
   hosts: openldapall
   module_defaults:
-    lock_timeout: 300
+    yum:
+      lock_timeout: 300
   become: yes
   become_user: root
   roles:
@@ -14,7 +15,8 @@
 - name: Install OpenLDAP Server on a single machine
   hosts: OpenLdapServer
   module_defaults:
-    lock_timeout: 300
+    yum:
+      lock_timeout: 300
   become: yes
   become_user: root
   roles:
@@ -25,7 +27,8 @@
 - name: Install KDC/LDAP Client on one or more machines
   hosts: OpenLdapClients
   module_defaults:
-    lock_timeout: 300
+    yum:
+      lock_timeout: 300
   become: yes
   become_user: root
   roles:
