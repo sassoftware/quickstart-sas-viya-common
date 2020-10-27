@@ -20,7 +20,6 @@
   tags:
     - set_host_routing
 
-
 - name: Log into each VM once,to avoid "unknown host" interactive message
   hosts: [AnsibleController]
   gather_facts: false
@@ -28,7 +27,6 @@
     - role: prepare_nodes/initialize_known_hosts
   tags:
     - initialize_known_hosts
-
 
 - name: Update sshd_config
   hosts: [sas_servers]
@@ -39,7 +37,6 @@
     - role: prepare_nodes/update_sshd
   tags:
     - update_sshd
-
 
 - name: Create saswork dir
   hosts: [ProgrammingServicesServers]
@@ -65,7 +62,6 @@
     - MOUNT_DIR: "{{ SAS_INSTALL_DIR }}"
     - MOUNT_DISK: "{{ SAS_INSTALL_DISK }}"
 
-
 - name: Mount userlib dir
   hosts: [NeedMountUserlibDrive]
   become_user: root
@@ -80,12 +76,8 @@
     - MOUNT_DIR: "{{ USERLIB_DIR }}"
     - MOUNT_DISK: "{{ USERLIB_DISK }}"
 
-
 - name: Mount cas cache dir
   hosts: [NeedMountCASCacheDrive]
-  module_defaults:
-    yum:
-      lock_timeout: 300
   become_user: root
   become: yes
   gather_facts: true

@@ -1,12 +1,7 @@
 ---
 
-
-
 - name: created share backup directory
   hosts: [SharedVaultServer]
-  module_defaults:
-    yum:
-      lock_timeout: 300
   become: yes
   become_user: root
   roles:
@@ -17,9 +12,6 @@
 
 - name: mount share backup directory
   hosts: [sas_servers]
-  module_defaults:
-    yum:
-      lock_timeout: 300
   become: yes
   become_user: root
   roles:
@@ -30,9 +22,6 @@
 
 - name: install mysql client
   hosts: [NeedDatabaseAccessClients]
-  module_defaults:
-    yum:
-      lock_timeout: 300
   gather_facts: False
   become: yes
   become_user: root
@@ -40,7 +29,3 @@
     - role: post_deployment/install_mysql_client
   tags:
     - install_mysql_client
-
-
-
-
