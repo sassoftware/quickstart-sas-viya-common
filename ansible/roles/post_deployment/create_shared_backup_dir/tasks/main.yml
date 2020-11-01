@@ -12,6 +12,7 @@
   yum:
     name: nfs-utils
     state: installed
+    lock_timeout: 300
 
 - name: nfs setup - start nfs
   service:

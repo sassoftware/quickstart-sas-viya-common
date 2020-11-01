@@ -1,6 +1,5 @@
 ---
 
-
 - name: create {{ MIRROR_DIR }} directory
   file:
     path: "{{ MIRROR_DIR }}"
@@ -9,8 +8,6 @@
     group: "{{ ansible_user_id }}"
     mode: 0777
     setype: httpd_sys_content_t
-
-
 
 - name: Download mirror
   shell: |
@@ -22,9 +19,9 @@
 
     aws --region ${EC2_REGION} s3 sync ${DM} /opt/sas/mirror
 
-
 - name: install httpd
   yum: name=httpd
+    lock_timeout: 300
 
 - name: set httpd port to 8008
   replace:

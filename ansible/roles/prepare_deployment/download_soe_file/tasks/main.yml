@@ -1,4 +1,5 @@
 ---
+
 - name: Get the cloud provider
   import_role:
     name: common/get_cloud_provider
