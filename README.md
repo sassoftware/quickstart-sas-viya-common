@@ -1,6 +1,8 @@
-# SAS Cloud Rapid Deployment common templates
+# SAS Cloud Rapid Deployment common templates -- Archived Repository
 
-Note: As of October 4, 2021, SAS is no longer supporting the SAS Viya 3.5 Quickstart Template for all cloud platforms. After this date, there is no expectation that this QuickStart will be functional. Rather, it will be available as a reference architecture only.
+**Note: As of October 4, 2021, SAS is no longer supporting the SAS Viya 3.5 Quickstart Template for all cloud platforms. After this date, there is no expectation that this QuickStart will be functional. Rather, it will be available as a reference architecture only. We recommend moving to the new SAS Viya for cloud solutions.**
+
+---
   
 These templates assume a topology with an "ansible controller" VM and one or more SAS/Viya VMs.
 
